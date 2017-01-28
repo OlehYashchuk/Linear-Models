@@ -1,3 +1,5 @@
+library(ggplot2)
+
 ?iris
 df  <- iris
 
@@ -53,6 +55,30 @@ ggplot(df1, aes(Species, Sepal.Length))+
   stat_summary(fun.data = mean_cl_normal, geom = "pointrange", 
                size = 2)
 
+# Quiz 1
+head(ToothGrowth)
+str(ToothGrowth)
+levels(as.factor(ToothGrowth$dose))
+x <- ToothGrowth$len[ToothGrowth$supp == "VC" & ToothGrowth$dose == 2]
+y <- ToothGrowth$len[ToothGrowth$supp == "OJ" & ToothGrowth$dose == 0.5]
+t <- t.test(x, y)
+t_stat <- t$statistic
+
+correct_data <- subset(ToothGrowth, supp=='OJ' & dose==0.5 | supp=='VC' & dose==2)    
+t_stat <- t.test(len ~ supp, correct_data)$statistic
+
+# Quiz 2
+getwd()
+l <- read.csv("lekarstva.csv")
+head(l)
+
+t <- t.test(l$Pressure_before, l$Pressure_after, paired = T)
+t$statistic
+
+
+
+
+
 
 ?wilcox.test
 
@@ -68,3 +94,25 @@ wilcox.test(df1$Petal.Length, df1$Petal.Width, paired = T)
 paired_wtest  <- wilcox.test(df1$Petal.Length, df1$Petal.Width, paired = T)
 
 paired_wtest$p.value
+
+
+
+
+# Quiz 3
+df <- read.table("dataset_11504_15.txt")
+head(df)
+
+bartlett.test(V1 ~ V2, df)
+
+wilcox.test(V1 ~ V2, df)
+
+# Quiz 4
+df <- read.table("dataset_11504_16.txt")
+head(df)
+
+t.test(df$V1, df$V2, paired = F, var.equal = F)
+
+
+
+
+
